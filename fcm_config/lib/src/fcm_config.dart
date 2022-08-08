@@ -99,20 +99,25 @@ class FCMConfig extends FCMConfigInterface {
     String? name,
     bool displayInForeground = true,
 
+    /// If true the app will show a permission dialog
+    bool isShoudPromptPermissions = true,
+
     /// default action name for linux
     String linuxActionName = 'fcm_config',
   }) async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(name: name, options: options);
-    await messaging.requestPermission(
-      alert: alert,
-      announcement: announcement,
-      criticalAlert: criticalAlert,
-      badge: badge,
-      carPlay: carPlay,
-      sound: sound,
-      provisional: provisional,
-    );
+    if (isShoudPromptPermissions) {
+      await messaging.requestPermission(
+        alert: alert,
+        announcement: announcement,
+        criticalAlert: criticalAlert,
+        badge: badge,
+        carPlay: carPlay,
+        sound: sound,
+        provisional: provisional,
+      );
+    }
 
     await messaging.setForegroundNotificationPresentationOptions(
       alert: false,
