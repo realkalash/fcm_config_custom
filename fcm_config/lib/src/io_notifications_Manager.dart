@@ -87,6 +87,8 @@ class NotificationManager implements LocaleNotificationInterface {
     );
     await _localeNotification.initialize(
       initializationSettings,
+      onDidReceiveNotificationResponse: (details) =>
+          _onPayLoad(details.payload),
       // onSelectNotification: _onPayLoad,
     );
     await _remoteSubscription?.cancel();
